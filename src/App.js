@@ -14,33 +14,30 @@ class App extends Component {
     }
   }
 
-  async componentDidMount() {
-    const { data } = await axios.get('http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=30271926&rettype=fasta&retmode=xml')
-
-    const dataString = parse(data);
-    const reg = new RegExp(this.state.matcher, 'g');
-    const matches = []
-
-    let nextMatch = reg.exec(dataString);
-    while (nextMatch) {
-      matches.push({
-        value: nextMatch[0],
-        start: reg.lastIndex - nextMatch[0].length + 1,
-        end: reg.lastIndex
-      });
-      
-      nextMatch = reg.exec(dataString);
-    }
-
-    console.log('~= MATCHES', matches)
-
-    this.setState({
-      matches
-    })
-  }
-
-  updateState = () => {
-
+  handleClick = () => {
+    axios.get('http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=30271926&rettype=fasta&retmode=xml')
+      .then(({data}) => {
+        const dataString = parse(data);
+        const reg = new RegExp(this.state.matcher, 'g');
+        const matches = []
+    
+        let nextMatch = reg.exec(dataString);
+        while (nextMatch) {
+          matches.push({
+            value: nextMatch[0],
+            start: reg.lastIndex - nextMatch[0].length + 1,
+            end: reg.lastIndex
+          });
+          
+          nextMatch = reg.exec(dataString);
+        }
+    
+        console.log('~= MATCHES', matches)
+    
+        this.setState({
+          matches
+        })
+      })
   }
 
   render() {
@@ -51,6 +48,9 @@ class App extends Component {
         <input value={this.state.databaseName} />
         <input value={this.state.databaseId} />
         <input value={this.state.matcher} />
+        <button onClick={this.handleClick} >
+          Get
+        </button>
 
         {matches.map((match, i) => {
           return (
