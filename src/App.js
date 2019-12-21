@@ -7,6 +7,8 @@ class App extends Component {
     super();
     this.state = {
       // TODO: hardcoded
+      databaseName: 'nucleotide',
+      databaseId: '30271926',
       matcher: 'ATATTAGG',
       matches: []
     }
@@ -17,18 +19,17 @@ class App extends Component {
 
     const dataString = parse(data);
     const reg = new RegExp(this.state.matcher, 'g');
-    // var string = 'A1B1Y:A1B2Y:A1B3Y:A1B4Z:A1B5Y:A1B6Y:A1B7Y:A1B8Z:A1B9Y:A1B10Y:A1B11Y';
-    // var reg = /A[0-9]+B[0-9]+Y:A[0-9]+B[0-9]+Y/g;
     const matches = []
-    let found = false
-    while (found = reg.exec(dataString)) {
+
+    let nextMatch = reg.exec(dataString);
+    while (nextMatch) {
       matches.push({
-        value: found[0],
-        start: reg.lastIndex - found[0].length + 1,
+        value: nextMatch[0],
+        start: reg.lastIndex - nextMatch[0].length + 1,
         end: reg.lastIndex
       });
-        
-        // reg.lastIndex -= found[0].split(':')[1].length;
+      
+      nextMatch = reg.exec(dataString);
     }
 
     console.log('~= MATCHES', matches)
@@ -38,11 +39,19 @@ class App extends Component {
     })
   }
 
+  updateState = () => {
+
+  }
+
   render() {
     const { matches } = this.state;
 
     return (
       <div className="App">
+        <input value={this.state.databaseName} />
+        <input value={this.state.databaseId} />
+        <input value={this.state.matcher} />
+
         {matches.map((match, i) => {
           return (
             <div key={i}>
