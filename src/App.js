@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 
+const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
+
 class App extends Component {
   constructor() {
     super();
@@ -15,7 +17,9 @@ class App extends Component {
   }
 
   handleClick = () => {
-    axios.get('http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=30271926&rettype=fasta&retmode=xml')
+    const url = buildNcbiUrl(this.state.databaseName, this.state.databaseId)
+
+    axios.get(url)
       .then(({data}) => {
         const dataString = parse(data);
         const reg = new RegExp(this.state.matcher, 'g');
@@ -67,6 +71,10 @@ class App extends Component {
 function parse(data) {
   // TODO: Better than regex
   return data.match(/<TSeq_sequence>(.*)<\/TSeq_sequence>/)[1]
+}
+
+function buildNcbiUrl(databaseName, databaseId) {
+  return `${NCBI_URL}?db=${databaseName}&id=${databaseId}&rettype=fasta&retmode=xml`
 }
 
 export default App;
