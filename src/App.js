@@ -12,12 +12,13 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    axios.get('http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=30271926&rettype=fasta&retmode=xml')
-      .then(res => {
-        this.setState({
-          dataString: res.data
-        })
-      })
+    const { data } = await axios.get('http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=30271926&rettype=fasta&retmode=xml')
+
+    const dataString = parse(data);
+
+    this.setState({
+      dataString
+    })
   }
 
   render() {
@@ -27,6 +28,11 @@ class App extends Component {
       </div>
     );
   }
+}
+
+function parse(data) {
+  // TODO: Better than regex
+  return data.match(/<TSeq_sequence>(.*)<\/TSeq_sequence>/)[1]
 }
 
 export default App;
