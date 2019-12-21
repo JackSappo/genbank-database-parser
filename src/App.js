@@ -11,8 +11,9 @@ class App extends Component {
       // TODO: hardcoded
       databaseName: 'nucleotide',
       databaseId: '30271926',
-      matcher: 'ATATTAGG',
-      matches: []
+      matcher: 'ATAT.AGG',
+      matches: [],
+      matchesCount: []
     }
   }
 
@@ -35,17 +36,27 @@ class App extends Component {
           
           nextMatch = reg.exec(dataString);
         }
-    
+
         console.log('~= MATCHES', matches)
+
+        const matchesCount = matches.reduce((accum, next) => {
+          const currValue = accum[next.value]
+          accum[next.value] = currValue ? currValue + 1 : 1
+
+          return accum;
+        }, {})
+
+        console.log('~= MATCHESCOUNT', matchesCount)
     
         this.setState({
-          matches
+          matches,
+          matchesCount
         })
       })
   }
 
   render() {
-    const { matches } = this.state;
+    const { matches, matchesCount } = this.state;
 
     return (
       <div className="App">
@@ -56,13 +67,21 @@ class App extends Component {
           Get
         </button>
 
-        {matches.map((match, i) => {
-          return (
-            <div key={i}>
-              {match.value} {match.start} {match.end}
-            </div>
-          )
-        })}
+        <br/><br/>
+
+        {matches.map((match, i) => (
+          <div key={i}>
+            {match.value} {match.start} {match.end}
+          </div>
+        ))}
+
+        <br/>
+
+        {Object.keys(matchesCount).map((key, i) => (
+          <div key={i}>
+            {key} {matchesCount[key]}
+          </div>
+        ))}
       </div>
     );
   }
