@@ -1,4 +1,5 @@
 .App {
+  height: 100vh;
   text-align: center;
   word-break: break-word;
   display: flex;
@@ -7,26 +8,29 @@
 
 .user-input-container {
   flex: 2;
-  border-right: 1px black solid;
+  border-right: 2px black solid;
+  background-color: #dedede;
 }
 
 .matches {
   flex: 2;
-  border-right: 1px black solid;
+  border-right: 2px black solid;
 }
 
 .match-counts {
   flex: 1;
 }
 
-.row-header {
+.match-row.row-header, .match-counts-row.row-header {
   background-color: black;
   color: white;
   font-weight: bold;
 }
 
 .match-row {
+  background-color: white;
   display: flex;
+  border-bottom: 1px solid #ccc;
 }
 
 .match-row > div:nth-child(1) {
@@ -38,9 +42,14 @@
 .match-row > div:nth-child(3) {
   flex: 1;
 }
+.match-row > div:not(:last-child) {
+  border-right: 1px solid #ccc;
+}
 
 .match-counts-row {
+  background-color: white;
   display: flex;
+  border-bottom: 1px solid #ccc;
 }
 
 .match-counts-row > div:nth-child(1) {
@@ -48,4 +57,7 @@
 }
 .match-counts-row > div:nth-child(2) {
   flex: 1;
+}
+.match-counts-row > div:not(:last-child) {
+  border-right: 1px solid #ccc;
 }
