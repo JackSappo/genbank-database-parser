@@ -1,5 +1,5 @@
 export function getMatchesFromData(data, matcher) {
-  const dataString = parse(data);
+  const dataString = parseData(data);
   const reg = new RegExp(matcher, 'g');
   const matches = []
 
@@ -26,22 +26,6 @@ export function getMatchCountsFromMatches(matches) {
   }, {})
 }
 
-export function parseError(err, databaseName, databaseId) {
-  try {
-    const { data } = err.response
-  
-    if (data.includes('Failed to understand id')) {
-      return `ID ${databaseId} not found in database "${databaseName}"`
-    } else if (data.match(/Database.* is not supported/)) {
-      return `Database "${databaseName}" is not supported`;
-    } else {
-      return 'An unknown error occurred when fetching data'
-    }
-  } catch (e) {
-    return `An unknown error occurred when parsing error: "${e.message}"`;
-  }
-}
-
-function parse(data) {
+function parseData(data) {
   return data.match(/<TSeq_sequence>(.*)<\/TSeq_sequence>/)[1]
 }

@@ -3,11 +3,9 @@ import axios from 'axios';
 import UserInputs from './UserInputs'
 import Results from './Results'
 import NCBICache from './utils/NCBICache'
-import { getMatchesFromData, getMatchCountsFromMatches, parseError } from './utils/parsers';
-import { validateUserParams } from './utils/errors';
+import { getMatchesFromData, getMatchCountsFromMatches } from './utils/parsers';
+import { validateUserParams, parseError } from './utils/errors';
 import './App.css';
-
-const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
 
 class App extends Component {
   constructor() {
@@ -24,7 +22,7 @@ class App extends Component {
     }
   }
   
-  handleClick = () => {
+  search = () => {
     const userParamError = validateUserParams(this.state);
 
     if (userParamError) {
@@ -85,7 +83,7 @@ class App extends Component {
           databaseId={this.state.databaseId}
           matcher={this.state.matcher}
           onChange={this.onChange}
-          handleClick={this.handleClick}
+          search={this.search}
           errorText={this.state.errorText}
           loading={this.state.loading}
         />
@@ -99,6 +97,7 @@ class App extends Component {
   }
 }
 
+const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
 
 function buildNcbiUrl(databaseName, databaseId) {
   return `${NCBI_URL}?db=${databaseName}&id=${databaseId}&rettype=fasta&retmode=xml`

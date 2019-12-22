@@ -1,7 +1,7 @@
 import React from 'react';
 
 function UserInputs (props) {
-  const { databaseName, databaseId, matcher, onChange, handleClick, errorText, loading } = props;
+  const { databaseName, databaseId, matcher, onChange, search, errorText, loading } = props;
 
   return (
     <div id="main">
@@ -10,7 +10,7 @@ function UserInputs (props) {
         <UserInputRow label="ID" name="databaseId" value={databaseId} onChange={onChange}/>
         <UserInputRow label="Regex Matcher" name="matcher" value={matcher} onChange={onChange}/>
         <div className="button-container">
-          <button disabled={loading} onClick={handleClick} >
+          <button disabled={loading} onClick={search} >
             Search
           </button>
         </div>
