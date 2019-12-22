@@ -6,10 +6,18 @@
   flex-direction: row;
 }
 
-.user-input-container {
+.main {
   flex: 2;
   border-right: 2px black solid;
   background-color: #dedede;
+}
+
+.user-input-container {
+  position: relative;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
 }
 
 .matches {

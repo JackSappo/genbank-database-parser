@@ -4,6 +4,7 @@ function UserInputs (props) {
   const { databaseName, databaseId, matcher, onChange, handleClick } = props;
 
   return (
+    <div className="main">
     <div className="user-input-container">
       <table>
         <tr>
@@ -40,6 +41,7 @@ function UserInputs (props) {
       <button onClick={handleClick} >
         GO!
       </button>
+    </div>
     </div>
   );
 }
