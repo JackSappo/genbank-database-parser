@@ -55,14 +55,20 @@ class App extends Component {
       })
   }
 
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
   render() {
     const { matches, matchesCount } = this.state;
 
     return (
       <div className="App">
-        <input value={this.state.databaseName} />
-        <input value={this.state.databaseId} />
-        <input value={this.state.matcher} />
+        <input name="databaseName" value={this.state.databaseName} onChange={this.onChange}  />
+        <input name="databaseId" value={this.state.databaseId} onChange={this.onChange} />
+        <input name="matcher" value={this.state.matcher} onChange={this.onChange} />
         <button onClick={this.handleClick} >
           Get
         </button>
