@@ -51,11 +51,7 @@ class App extends Component {
           onChange={this.onChange}
           handleClick={this.handleClick}
         />
-
-        <br/>
         <Matches matches={this.state.matches} />
-
-        <br/>
         <MatchCounts matchCounts={this.state.matchCounts} />
       </div>
     );

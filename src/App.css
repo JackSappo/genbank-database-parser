@@ -5,6 +5,47 @@
   flex-direction: row;
 }
 
-.user-input-container, .matches, .match-counts {
+.user-input-container {
+  flex: 2;
+  border-right: 1px black solid;
+}
+
+.matches {
+  flex: 2;
+  border-right: 1px black solid;
+}
+
+.match-counts {
+  flex: 1;
+}
+
+.row-header {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.match-row {
+  display: flex;
+}
+
+.match-row > div:nth-child(1) {
+  flex: 2;
+}
+.match-row > div:nth-child(2) {
+  flex: 1;
+}
+.match-row > div:nth-child(3) {
+  flex: 1;
+}
+
+.match-counts-row {
+  display: flex;
+}
+
+.match-counts-row > div:nth-child(1) {
+  flex: 2;
+}
+.match-counts-row > div:nth-child(2) {
   flex: 1;
 }
