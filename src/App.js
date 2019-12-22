@@ -3,7 +3,7 @@ import axios from 'axios';
 import UserInputs from './UserInputs'
 import Results from './Results'
 import NCBICache from './utils/NCBICache'
-import { getMatchesFromData, getMatchCountsFromMatches } from './utils/parsers';
+import { getMatchesFromData, getMatchCountsFromMatches, parseError } from './utils/parsers';
 import './App.css';
 
 const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
@@ -18,7 +18,8 @@ class App extends Component {
       databaseId: '30271926',
       matcher: 'ATAT.AGG',
       matches: [],
-      matchCounts: []
+      matchCounts: [],
+      errorText: ''
     }
   }
 
@@ -43,7 +44,13 @@ class App extends Component {
         this.setState({
           loading: false,
           matches,
-          matchCounts
+          matchCounts,
+          errorText: ''
+        })
+      }).catch(err => {
+        this.setState({
+          errorText: parseError(err, databaseName, databaseId),
+          loading: false
         })
       })
     })
@@ -64,6 +71,7 @@ class App extends Component {
           matcher={this.state.matcher}
           onChange={this.onChange}
           handleClick={this.handleClick}
+          errorText={this.state.errorText}
         />
         <Results 
           matches={this.state.matches}
