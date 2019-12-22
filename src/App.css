@@ -1,4 +1,10 @@
 .App {
   text-align: center;
   word-break: break-word;
+  display: flex;
+  flex-direction: row;
+}
+
+.user-input-container, .matches, .match-counts {
+  flex: 1;
 }

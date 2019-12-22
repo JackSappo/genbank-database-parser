@@ -4,12 +4,18 @@ function UserInputs (props) {
   const { databaseName, databaseId, matcher, onChange, handleClick } = props;
 
   return (
-    <div className="user-inputs">
-      <input name="databaseName" value={databaseName} onChange={onChange}  />
-      <input name="databaseId" value={databaseId} onChange={onChange} />
-      <input name="matcher" value={matcher} onChange={onChange} />
+    <div className="user-input-container">
+      <div className="user-input">
+        <input name="databaseName" value={databaseName} onChange={onChange}  />
+      </div>
+      <div className="user-input">
+        <input name="databaseId" value={databaseId} onChange={onChange} />
+      </div>
+      <div className="user-input">
+        <input name="matcher" value={matcher} onChange={onChange} />
+      </div>
       <button onClick={handleClick} >
-        Get
+        GO!
       </button>
     </div>
   );
