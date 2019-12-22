@@ -50,7 +50,9 @@ class App extends Component {
       }).catch(err => {
         this.setState({
           errorText: parseError(err, databaseName, databaseId),
-          loading: false
+          loading: false,
+          matches: [],
+          matchCounts: []
         })
       })
     })

@@ -3,18 +3,14 @@ import React from 'react';
 function Matches (props) {
   const { matches } = props;
 
-  // if (!matches || !matches.length) {
-  //   return (
-  //     <div className="matches">
-  //       No matches!
-  //     </div>
-  //   )
-  // }
-
   return (
     <div className="matches">
       <MatchRowHeader />
-      {matches.map((match, i) => <MatchRow match={match} key={i} /> )}
+      { 
+        matches && matches.length
+        ? matches.map((match, i) => <MatchRow match={match} key={i} /> )
+        : <EmptyRow />
+      }
     </div>
   );
 }
@@ -35,6 +31,14 @@ function MatchRow({match, key}) {
       <div>{match.value}</div>  
       <div>{match.start}</div>
       <div>{match.end}</div>
+    </div>
+  )
+}
+
+function EmptyRow() {
+  return (
+    <div className="match-row empty">
+      No matches found!
     </div>
   )
 }

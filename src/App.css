@@ -92,6 +92,11 @@
   border-right: 1px solid #ccc;
 }
 
+.match-row.empty {
+  display: block;
+  text-align: center;
+}
+
 .match-counts-row {
   background-color: white;
   display: flex;

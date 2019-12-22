@@ -34,7 +34,7 @@ export function parseError(err, databaseName, databaseId) {
       return `ID ${databaseId} not found in database "${databaseName}"`
     } else if (data.match(/Database.* is not supported/)) {
       return `Database "${databaseName}" is not supported`;
-    } {
+    } else {
       return 'An unknown error occurred when fetching data'
     }
   } catch (e) {
