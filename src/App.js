@@ -49,10 +49,10 @@ class App extends Component {
         })
       }).catch(err => {
         this.setState({
-          errorText: parseError(err, databaseName, databaseId),
-          loading: false,
           matches: [],
-          matchCounts: []
+          matchCounts: [],
+          loading: false,
+          errorText: parseError(err, databaseName, databaseId),
         })
       })
     })
@@ -74,6 +74,7 @@ class App extends Component {
           onChange={this.onChange}
           handleClick={this.handleClick}
           errorText={this.state.errorText}
+          loading={this.state.loading}
         />
         <Results 
           matches={this.state.matches}

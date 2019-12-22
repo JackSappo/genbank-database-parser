@@ -1,7 +1,7 @@
 import React from 'react';
 
 function UserInputs (props) {
-  const { databaseName, databaseId, matcher, onChange, handleClick, errorText } = props;
+  const { databaseName, databaseId, matcher, onChange, handleClick, errorText, loading } = props;
 
   return (
     <div id="main">
@@ -39,7 +39,7 @@ function UserInputs (props) {
           </tr>
         </table>
         <div className="button-container">
-          <button onClick={handleClick} >
+          <button disabled={loading} onClick={handleClick} >
             GO!
           </button>
         </div>
