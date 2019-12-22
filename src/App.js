@@ -4,6 +4,7 @@ import UserInputs from './UserInputs'
 import Results from './Results'
 import NCBICache from './utils/NCBICache'
 import { getMatchesFromData, getMatchCountsFromMatches, parseError } from './utils/parsers';
+import { validateUserParams } from './utils/errors';
 import './App.css';
 
 const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
@@ -22,9 +23,21 @@ class App extends Component {
       errorText: ''
     }
   }
-
+  
   handleClick = () => {
-    const { databaseName, databaseId } = this.state;
+    const userParamError = validateUserParams(this.state);
+
+    if (userParamError) {
+      this.setState({
+        matches: [],
+        matchCounts: [],
+        errorText: userParamError
+      })
+
+      return;
+    }
+
+    const { databaseName, databaseId, matcher } = this.state;
 
     const cachedValue = this._cache.get(databaseName, databaseId)
     
@@ -38,7 +51,7 @@ class App extends Component {
           this._cache.set(databaseName, databaseId, data)
         }
 
-        const matches = getMatchesFromData(data, this.state.matcher);
+        const matches = getMatchesFromData(data, matcher);
         const matchCounts = getMatchCountsFromMatches(matches);
 
         this.setState({

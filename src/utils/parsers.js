@@ -28,10 +28,6 @@ export function getMatchCountsFromMatches(matches) {
 
 export function parseError(err, databaseName, databaseId) {
   try {
-    if (err.message.includes('Invalid regular expression')) {
-      return 'Invalid regular expression';
-    }
-
     const { data } = err.response
   
     if (data.includes('Failed to understand id')) {
@@ -47,6 +43,5 @@ export function parseError(err, databaseName, databaseId) {
 }
 
 function parse(data) {
-  // TODO: Better than regex
   return data.match(/<TSeq_sequence>(.*)<\/TSeq_sequence>/)[1]
 }
