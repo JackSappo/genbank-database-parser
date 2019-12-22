@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import UserInputs from './UserInputs'
+import Matches from './Matches'
+import MatchCounts from './MatchCounts'
 import './App.css';
 
 const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
@@ -9,12 +11,11 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      // TODO: hardcoded
       databaseName: 'nucleotide',
       databaseId: '30271926',
       matcher: 'ATAT.AGG',
       matches: [],
-      matchesCount: []
+      matchCounts: []
     }
   }
 
@@ -40,18 +41,18 @@ class App extends Component {
 
         console.log('~= MATCHES', matches)
 
-        const matchesCount = matches.reduce((accum, next) => {
+        const matchCounts = matches.reduce((accum, next) => {
           const currValue = accum[next.value]
           accum[next.value] = currValue ? currValue + 1 : 1
 
           return accum;
         }, {})
 
-        console.log('~= MATCHESCOUNT', matchesCount)
+        console.log('~= MATCHCOUNTS', matchCounts)
     
         this.setState({
           matches,
-          matchesCount
+          matchCounts
         })
       })
   }
@@ -63,8 +64,6 @@ class App extends Component {
   }
 
   render() {
-    const { matches, matchesCount } = this.state;
-
     return (
       <div className="App">
         <UserInputs 
@@ -75,21 +74,11 @@ class App extends Component {
           handleClick={this.handleClick}
         />
 
-        <br/><br/>
-
-        {matches.map((match, i) => (
-          <div key={i}>
-            {match.value} {match.start} {match.end}
-          </div>
-        ))}
+        <br/>
+        <Matches matches={this.state.matches} />
 
         <br/>
-
-        {Object.keys(matchesCount).map((key, i) => (
-          <div key={i}>
-            {key} {matchesCount[key]}
-          </div>
-        ))}
+        <MatchCounts matchCounts={this.state.matchCounts} />
       </div>
     );
   }
