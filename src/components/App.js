@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import UserInputs from './UserInputs'
 import Results from './Results'
-import NCBICache from './utils/NCBICache'
-import { getMatchesFromData, getMatchCountsFromMatches } from './utils/parsers';
-import { validateUserParams, parseError } from './utils/errors';
-import './App.css';
+import NCBICache from '../utils/NCBICache'
+import { getMatchesFromData, getMatchCountsFromMatches } from '../utils/parsers';
+import { validateUserParams, parseError } from '../utils/errors';
+import '../assets/stylesheets/App.css';
 
 class App extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class App extends Component {
       loading: false,
       databaseName: 'nucleotide',
       databaseId: '30271926',
-      matcher: 'ATAT.AGG',
+      matcher: 'ATG.T',
       matches: [],
       matchCounts: [],
       errorText: ''
@@ -97,9 +97,8 @@ class App extends Component {
   }
 }
 
-const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
-
 function buildNcbiUrl(databaseName, databaseId) {
+  const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
   return `${NCBI_URL}?db=${databaseName}&id=${databaseId}&rettype=fasta&retmode=xml`
 }
 
