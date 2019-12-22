@@ -28,9 +28,6 @@ class App extends Component {
         const matches = getMatchesFromData(data, this.state.matcher);
         const matchCounts = getMatchCountsFromMatches(matches);
 
-        console.log('~= MATCHES', matches)
-        console.log('~= MATCHCOUNTS', matchCounts)
-    
         this.setState({
           matches,
           matchCounts
