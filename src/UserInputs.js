@@ -8,7 +8,7 @@ function UserInputs (props) {
       <div className="user-input-container">
         <table>
           <tr>
-            <td>
+            <td className="label">
               Database
             </td>
             <td>
@@ -18,7 +18,7 @@ function UserInputs (props) {
             </td>
           </tr>
           <tr>
-            <td>
+            <td className="label">
               ID
             </td>
             <td>
@@ -28,7 +28,7 @@ function UserInputs (props) {
             </td>
           </tr>
           <tr>
-            <td>
+            <td className="label">
               Regex Matcher
             </td>
             <td>

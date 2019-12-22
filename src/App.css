@@ -16,9 +16,14 @@
 .user-input-container {
   position: relative;
   display: inline-block;
+  padding-top: 40px;
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
+}
+
+.user-input-container td.label {
+  text-align: right;
 }
 
 .button-container {
@@ -26,6 +31,7 @@
 }
 
 .error-container {
+  height: 40px;
   text-align: right;
   color: red;
   max-width: 220px;
