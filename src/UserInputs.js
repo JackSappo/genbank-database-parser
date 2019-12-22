@@ -11,7 +11,7 @@ function UserInputs (props) {
         <UserInputRow label="Regex Matcher" name="matcher" value={matcher} onChange={onChange}/>
         <div className="button-container">
           <button disabled={loading} onClick={handleClick} >
-            GO!
+            Search
           </button>
         </div>
         <div className="error-container">

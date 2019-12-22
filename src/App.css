@@ -31,10 +31,21 @@
 .user-input-label {
   text-align: right;
   margin-right: 4px;
+  font-size: 15px;
+}
+
+.user-input {
+  font-size: 12px;
 }
 
 .button-container {
   text-align: right;
+}
+
+.button-container button {
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .error-container {
