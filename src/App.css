@@ -22,8 +22,15 @@
   text-align: center;
 }
 
-.user-input-container td.label {
+.user-input-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 4px 0;
+}
+
+.user-input-label {
   text-align: right;
+  margin-right: 4px;
 }
 
 .button-container {
