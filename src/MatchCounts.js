@@ -22,9 +22,9 @@ function MatchCountRowHeader() {
   );
 }
 
-function MatchCountRow({value, count, key}) {
+function MatchCountRow({value, count}) {
   return (
-    <div className="match-counts-row" key={key}>
+    <div className="match-counts-row">
       <div>{value}</div>
       <div>{count}</div>
     </div>

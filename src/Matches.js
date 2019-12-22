@@ -25,9 +25,9 @@ function MatchRowHeader() {
   );
 }
 
-function MatchRow({match, key}) {
+function MatchRow({match}) {
   return (
-    <div className="match-row" key={key}>
+    <div className="match-row">
       <div>{match.value}</div>  
       <div>{match.start}</div>
       <div>{match.end}</div>
