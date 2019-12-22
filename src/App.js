@@ -3,6 +3,7 @@ import axios from 'axios';
 import UserInputs from './UserInputs'
 import Matches from './Matches'
 import MatchCounts from './MatchCounts'
+import { getMatchesFromData, getMatchCountsFromMatches } from './utils/parsers';
 import './App.css';
 
 const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
@@ -24,30 +25,10 @@ class App extends Component {
 
     axios.get(url)
       .then(({data}) => {
-        const dataString = parse(data);
-        const reg = new RegExp(this.state.matcher, 'g');
-        const matches = []
-    
-        let nextMatch = reg.exec(dataString);
-        while (nextMatch) {
-          matches.push({
-            value: nextMatch[0],
-            start: reg.lastIndex - nextMatch[0].length + 1,
-            end: reg.lastIndex
-          });
-          
-          nextMatch = reg.exec(dataString);
-        }
+        const matches = getMatchesFromData(data, this.state.matcher);
+        const matchCounts = getMatchCountsFromMatches(matches);
 
         console.log('~= MATCHES', matches)
-
-        const matchCounts = matches.reduce((accum, next) => {
-          const currValue = accum[next.value]
-          accum[next.value] = currValue ? currValue + 1 : 1
-
-          return accum;
-        }, {})
-
         console.log('~= MATCHCOUNTS', matchCounts)
     
         this.setState({
@@ -84,10 +65,6 @@ class App extends Component {
   }
 }
 
-function parse(data) {
-  // TODO: Better than regex
-  return data.match(/<TSeq_sequence>(.*)<\/TSeq_sequence>/)[1]
-}
 
 function buildNcbiUrl(databaseName, databaseId) {
   return `${NCBI_URL}?db=${databaseName}&id=${databaseId}&rettype=fasta&retmode=xml`
