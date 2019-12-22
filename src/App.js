@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import UserInputs from './UserInputs'
 import './App.css';
 
 const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
@@ -66,12 +67,13 @@ class App extends Component {
 
     return (
       <div className="App">
-        <input name="databaseName" value={this.state.databaseName} onChange={this.onChange}  />
-        <input name="databaseId" value={this.state.databaseId} onChange={this.onChange} />
-        <input name="matcher" value={this.state.matcher} onChange={this.onChange} />
-        <button onClick={this.handleClick} >
-          Get
-        </button>
+        <UserInputs 
+          databaseName={this.state.databaseName}
+          databaseId={this.state.databaseId}
+          matcher={this.state.matcher}
+          onChange={this.onChange}
+          handleClick={this.handleClick}
+        />
 
         <br/><br/>
 
