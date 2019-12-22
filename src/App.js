@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import UserInputs from './UserInputs'
-import Matches from './Matches'
-import MatchCounts from './MatchCounts'
+import Results from './Results'
 import { getMatchesFromData, getMatchCountsFromMatches } from './utils/parsers';
 import './App.css';
 
@@ -12,6 +11,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      loading: false,
       databaseName: 'nucleotide',
       databaseId: '30271926',
       matcher: 'ATAT.AGG',
@@ -23,16 +23,19 @@ class App extends Component {
   handleClick = () => {
     const url = buildNcbiUrl(this.state.databaseName, this.state.databaseId)
 
-    axios.get(url)
-      .then(({data}) => {
-        const matches = getMatchesFromData(data, this.state.matcher);
-        const matchCounts = getMatchCountsFromMatches(matches);
-
-        this.setState({
-          matches,
-          matchCounts
+    this.setState({ loading: true }, () => {
+      axios.get(url)
+        .then(({data}) => {
+          const matches = getMatchesFromData(data, this.state.matcher);
+          const matchCounts = getMatchCountsFromMatches(matches);
+  
+          this.setState({
+            loading: false,
+            matches,
+            matchCounts
+          })
         })
-      })
+    })
   }
 
   onChange = (e) => {
@@ -51,8 +54,11 @@ class App extends Component {
           onChange={this.onChange}
           handleClick={this.handleClick}
         />
-        <Matches matches={this.state.matches} />
-        <MatchCounts matchCounts={this.state.matchCounts} />
+        <Results 
+          matches={this.state.matches}
+          matchCounts={this.state.matchCounts}
+          loading={this.state.loading}
+        />
       </div>
     );
   }
