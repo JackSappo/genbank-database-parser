@@ -15,6 +15,6 @@ export default class NCBICache {
       this._cache[database] = {};
     }
 
-   this._cache[database][id] = value;
+    this._cache[database][id] = value;
   }
 }

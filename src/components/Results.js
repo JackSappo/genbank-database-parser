@@ -1,6 +1,6 @@
 import React from 'react';
-import Matches from './Matches'
-import MatchCounts from './MatchCounts'
+import Matches from './Matches';
+import MatchCounts from './MatchCounts';
 import Loader from './Loader';
 
 function Results(props) {
@@ -10,7 +10,7 @@ function Results(props) {
       <MatchCounts matchCounts={props.matchCounts} />
       {props.loading ? <Loader /> : null}
     </div>
-  )
+  );
 }
 
 export default Results;

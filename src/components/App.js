@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import UserInputs from './UserInputs'
-import Results from './Results'
-import NCBICache from '../utils/NCBICache'
-import { getMatchesFromData, getMatchCountsFromMatches } from '../utils/parsers';
+import UserInputs from './UserInputs';
+import Results from './Results';
+import NCBICache from '../utils/NCBICache';
+import {
+  getMatchesFromData,
+  getMatchCountsFromMatches
+} from '../utils/parsers';
 import { validateUserParams, parseError } from '../utils/errors';
 import '../assets/stylesheets/App.css';
 
@@ -19,9 +22,9 @@ class App extends Component {
       matches: [],
       matchCounts: [],
       errorText: ''
-    }
+    };
   }
-  
+
   search = () => {
     const userParamError = validateUserParams(this.state);
 
@@ -30,55 +33,57 @@ class App extends Component {
         matches: [],
         matchCounts: [],
         errorText: userParamError
-      })
+      });
 
       return;
     }
 
     const { databaseName, databaseId, matcher } = this.state;
 
-    const cachedValue = this._cache.get(databaseName, databaseId)
-    
-    const dataPromise = cachedValue 
+    const cachedValue = this._cache.get(databaseName, databaseId);
+
+    const dataPromise = cachedValue
       ? Promise.resolve({ data: cachedValue })
       : axios.get(buildNcbiUrl(databaseName, databaseId));
 
     this.setState({ loading: true }, () => {
-      dataPromise.then(({data}) => {
-        if (!cachedValue) {
-          this._cache.set(databaseName, databaseId, data)
-        }
+      dataPromise
+        .then(({ data }) => {
+          if (!cachedValue) {
+            this._cache.set(databaseName, databaseId, data);
+          }
 
-        const matches = getMatchesFromData(data, matcher);
-        const matchCounts = getMatchCountsFromMatches(matches);
+          const matches = getMatchesFromData(data, matcher);
+          const matchCounts = getMatchCountsFromMatches(matches);
 
-        this.setState({
-          loading: false,
-          matches,
-          matchCounts,
-          errorText: ''
+          this.setState({
+            loading: false,
+            matches,
+            matchCounts,
+            errorText: ''
+          });
         })
-      }).catch(err => {
-        this.setState({
-          matches: [],
-          matchCounts: [],
-          loading: false,
-          errorText: parseError(err, databaseName, databaseId),
-        })
-      })
-    })
-  }
+        .catch(err => {
+          this.setState({
+            matches: [],
+            matchCounts: [],
+            loading: false,
+            errorText: parseError(err, databaseName, databaseId)
+          });
+        });
+    });
+  };
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
-    })
-  }
+    });
+  };
 
   render() {
     return (
       <div className="App">
-        <UserInputs 
+        <UserInputs
           databaseName={this.state.databaseName}
           databaseId={this.state.databaseId}
           matcher={this.state.matcher}
@@ -87,7 +92,7 @@ class App extends Component {
           errorText={this.state.errorText}
           loading={this.state.loading}
         />
-        <Results 
+        <Results
           matches={this.state.matches}
           matchCounts={this.state.matchCounts}
           loading={this.state.loading}
@@ -99,7 +104,7 @@ class App extends Component {
 
 function buildNcbiUrl(databaseName, databaseId) {
   const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
-  return `${NCBI_URL}?db=${databaseName}&id=${databaseId}&rettype=fasta&retmode=xml`
+  return `${NCBI_URL}?db=${databaseName}&id=${databaseId}&rettype=fasta&retmode=xml`;
 }
 
 export default App;

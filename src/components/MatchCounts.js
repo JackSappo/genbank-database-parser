@@ -1,14 +1,14 @@
 import React from 'react';
 
-function MatchCounts (props) {
+function MatchCounts(props) {
   const { matchCounts } = props;
 
   return (
     <div className="match-counts">
       <MatchCountRowHeader />
-      {Object.keys(matchCounts).map((key, i) => 
+      {Object.keys(matchCounts).map((key, i) => (
         <MatchCountRow value={key} count={matchCounts[key]} key={i} />
-      )}
+      ))}
     </div>
   );
 }
@@ -22,13 +22,13 @@ function MatchCountRowHeader() {
   );
 }
 
-function MatchCountRow({value, count}) {
+function MatchCountRow({ value, count }) {
   return (
     <div className="match-counts-row">
       <div>{value}</div>
       <div>{count}</div>
     </div>
-  )
+  );
 }
 
 export default MatchCounts;

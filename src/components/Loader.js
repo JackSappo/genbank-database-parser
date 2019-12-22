@@ -11,10 +11,10 @@ function Loader() {
           color="#000000"
           height={30}
           width={30}
-          />
+        />
       </div>
     </div>
-  )
+  );
 }
 
 export default Loader;
