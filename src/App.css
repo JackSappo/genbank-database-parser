@@ -59,6 +59,7 @@
   top: 50%;
 }
 
+/* Rows */
 .matches {
   flex: 2;
   border-right: 2px black solid;
@@ -79,12 +80,14 @@
   font-weight: bold;
 }
 
-.match-row {
-  background-color: white;
+.match-row, .match-counts-row {
   display: flex;
   border-bottom: 1px solid #ccc;
 }
 
+.match-row > div, .match-counts-row > div {
+  padding: 1px 0;
+}
 .match-row > div:nth-child(1) {
   flex: 2;
 }
@@ -97,16 +100,9 @@
 .match-row > div:not(:last-child) {
   border-right: 1px solid #ccc;
 }
-
 .match-row.empty {
   display: block;
   text-align: center;
-}
-
-.match-counts-row {
-  background-color: white;
-  display: flex;
-  border-bottom: 1px solid #ccc;
 }
 
 .match-counts-row > div:nth-child(1) {

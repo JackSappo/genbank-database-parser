@@ -8,8 +8,8 @@ function Matches (props) {
       <MatchRowHeader />
       { 
         matches && matches.length
-        ? matches.map((match, i) => <MatchRow match={match} key={i} /> )
-        : <EmptyRow />
+          ? matches.map((match, i) => <MatchRow match={match} key={i} /> )
+          : <EmptyRow />
       }
     </div>
   );
