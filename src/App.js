@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import UserInputs from './UserInputs'
 import Results from './Results'
+import NCBICache from './utils/NCBICache'
 import { getMatchesFromData, getMatchCountsFromMatches } from './utils/parsers';
 import './App.css';
 
@@ -10,6 +11,7 @@ const NCBI_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi';
 class App extends Component {
   constructor() {
     super();
+    this._cache = new NCBICache();
     this.state = {
       loading: false,
       databaseName: 'nucleotide',
@@ -21,20 +23,29 @@ class App extends Component {
   }
 
   handleClick = () => {
-    const url = buildNcbiUrl(this.state.databaseName, this.state.databaseId)
+    const { databaseName, databaseId } = this.state;
+
+    const cachedValue = this._cache.get(databaseName, databaseId)
+    
+    const dataPromise = cachedValue 
+      ? Promise.resolve({ data: cachedValue })
+      : axios.get(buildNcbiUrl(databaseName, databaseId));
 
     this.setState({ loading: true }, () => {
-      axios.get(url)
-        .then(({data}) => {
-          const matches = getMatchesFromData(data, this.state.matcher);
-          const matchCounts = getMatchCountsFromMatches(matches);
-  
-          this.setState({
-            loading: false,
-            matches,
-            matchCounts
-          })
+      dataPromise.then(({data}) => {
+        if (!cachedValue) {
+          this._cache.set(databaseName, databaseId, data)
+        }
+
+        const matches = getMatchesFromData(data, this.state.matcher);
+        const matchCounts = getMatchCountsFromMatches(matches);
+
+        this.setState({
+          loading: false,
+          matches,
+          matchCounts
         })
+      })
     })
   }
 
