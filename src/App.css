@@ -14,7 +14,7 @@
 
 .user-input-container {
   position: relative;
-  width: 100%;
+  display: inline-block;
   top: 50%;
   transform: translateY(-50%);
   text-align: center;
@@ -23,13 +23,18 @@
 .matches {
   flex: 2;
   border-right: 2px black solid;
+  overflow: scroll;
 }
 
 .match-counts {
   flex: 1;
+  overflow: scroll;
 }
 
 .match-row.row-header, .match-counts-row.row-header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
   background-color: black;
   color: white;
   font-weight: bold;
