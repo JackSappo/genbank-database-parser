@@ -20,7 +20,7 @@ class App extends Component {
       databaseId: '30271926',
       matcher: 'ATG.T',
       matches: [],
-      matchCounts: [],
+      matchCounts: {},
       errorText: ''
     };
   }

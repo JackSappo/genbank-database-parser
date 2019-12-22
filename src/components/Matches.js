@@ -18,7 +18,7 @@ function Matches(props) {
 function MatchRowHeader() {
   return (
     <div className="match-row row-header">
-      <div>Value</div>
+      <div>Sequence</div>
       <div>S. Index</div>
       <div>E. Index</div>
     </div>

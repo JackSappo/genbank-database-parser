@@ -16,7 +16,7 @@ function MatchCounts(props) {
 function MatchCountRowHeader() {
   return (
     <div className="match-row row-header">
-      <div>Value</div>
+      <div>Sequence</div>
       <div>Count</div>
     </div>
   );
