@@ -28,6 +28,10 @@ export function getMatchCountsFromMatches(matches) {
 
 export function parseError(err, databaseName, databaseId) {
   try {
+    if (err.message.includes('Invalid regular expression')) {
+      return 'Invalid regular expression';
+    }
+
     const { data } = err.response
   
     if (data.includes('Failed to understand id')) {
@@ -38,7 +42,7 @@ export function parseError(err, databaseName, databaseId) {
       return 'An unknown error occurred when fetching data'
     }
   } catch (e) {
-    return 'An unknown error occurred when parsing error';
+    return `An unknown error occurred when parsing error: "${e.message}"`;
   }
 }
 
